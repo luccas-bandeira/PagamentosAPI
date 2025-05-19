@@ -4,13 +4,13 @@ class PagamentosController {
 
     async criarPagamento(req, res) {
         try {
-            const { codigoDebito, documentoPagador, metodoPagamento, numeroCartao, valor } = req.body;
+            const { codigoDebito, identificadorPagador, metodoPagamento, numeroCartao, valor } = req.body;
 
             if ((metodoPagamento === "cartao_credito" || metodoPagamento === "cartao_debito") && !numeroCartao) {
                 return res.status(400).json({ error: "Número do cartão é obrigatório para cartão." });
             }
 
-            const pagamento = await Pagamento.create({ codigoDebito, documentoPagador, metodoPagamento, numeroCartao, valor });
+            const pagamento = await Pagamento.create({ codigoDebito, identificadorPagador, metodoPagamento, numeroCartao, valor });
             res.status(201).json(pagamento);
         } catch (err) {
             res.status(500).json({ error: err.message });
@@ -47,12 +47,12 @@ class PagamentosController {
 
     async listarPagamentos(req, res) {
         try {
-            const { codigoDebito, documentoPagador, status } = req.query;
+            const { codigoDebito, identificadorPagador, status } = req.query;
 
             const where = { ativo: true };
 
             if (codigoDebito) where.codigoDebito = codigoDebito;
-            if (documentoPagador) where.documentoPagador = documentoPagador;
+            if (identificadorPagador) where.identificadorPagador = identificadorPagador;
             if (status) where.status = status;
 
             const pagamentos = await Pagamento.findAll({ where });

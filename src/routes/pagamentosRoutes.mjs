@@ -5,7 +5,7 @@ const routes = Router()
 
 routes.post('/pagamentos', PagamentosController.criarPagamento)
 routes.patch('/:id/status', PagamentosController.atualizarStatusPagamento)
-routes.get('/', PagamentosController.listarPagamentos)
+routes.get('/pagamentos', PagamentosController.listarPagamentos)
 routes.delete('/:id', PagamentosController.excluirPagamentos)
 
 export default routes
